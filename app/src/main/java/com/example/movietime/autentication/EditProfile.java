@@ -1,4 +1,4 @@
-package com.example.movietime;
+package com.example.movietime.autentication;
 
 import android.content.Context;
 import android.content.Intent;
@@ -13,6 +13,9 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.movietime.database.DBHelper;
+import com.example.movietime.R;
+import com.example.movietime.main.activity.MainActivity;
 import com.google.android.material.textfield.TextInputEditText;
 
 public class EditProfile extends AppCompatActivity {

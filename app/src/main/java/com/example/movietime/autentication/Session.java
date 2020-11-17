@@ -1,4 +1,4 @@
-package com.example.movietime;
+package com.example.movietime.autentication;
 
 import android.content.Context;
 import android.content.SharedPreferences;

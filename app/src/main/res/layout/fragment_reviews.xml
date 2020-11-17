@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="#eceff1"
-    tools:context=".ReviewsFragment">
+    tools:context=".moviedetails.fragments.ReviewsFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerview_reviews"

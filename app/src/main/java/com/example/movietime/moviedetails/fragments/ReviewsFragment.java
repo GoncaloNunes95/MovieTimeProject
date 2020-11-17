@@ -1,9 +1,7 @@
-package com.example.movietime;
+package com.example.movietime.moviedetails.fragments;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -13,22 +11,23 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.example.movietime.BuildConfig;
+import com.example.movietime.database.DBHelper;
+import com.example.movietime.R;
+import com.example.movietime.adapters.ReviewsAdapter;
+import com.example.movietime.autentication.Session;
 import com.example.movietime.data.Filme;
-import com.example.movietime.data.Trailers;
-import com.example.movietime.data.mapper.TrailersMapper;
+import com.example.movietime.data.mapper.ReviewsMapper;
 import com.example.movietime.network.ApiService;
-import com.example.movietime.network.response.TrailersResult;
-
-import java.util.List;
+import com.example.movietime.network.response.ReviewsResult;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class TrailersFragment extends Fragment implements TrailersAdapter.ItemClickListener{
+public class ReviewsFragment extends Fragment {
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -36,19 +35,18 @@ public class TrailersFragment extends Fragment implements TrailersAdapter.ItemCl
     private DBHelper db;
     private Session session;
     private String email, password, user;
-    private RecyclerView listtrailers;
-    private TrailersAdapter listTrailerAdapter;
+    private ReviewsAdapter listReviewsAdapter;
+    private RecyclerView listreviews;
     private Filme filme;
-    public List<Trailers> trailers;
 
     private String mParam1;
     private String mParam2;
 
-    public TrailersFragment() {
+    public ReviewsFragment() {
     }
 
-    public static TrailersFragment newInstance(String param1, String param2) {
-        TrailersFragment fragment = new TrailersFragment();
+    public static ReviewsFragment newInstance(String param1, String param2) {
+        ReviewsFragment fragment = new ReviewsFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -67,7 +65,7 @@ public class TrailersFragment extends Fragment implements TrailersAdapter.ItemCl
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_trailers, container, false);
+        View view = inflater.inflate(R.layout.fragment_reviews, container, false);
         db = new DBHelper(getContext());
 
         SharedPreferences prefs = this.getActivity().getSharedPreferences("User", Context.MODE_PRIVATE);
@@ -83,50 +81,43 @@ public class TrailersFragment extends Fragment implements TrailersAdapter.ItemCl
 
         filme = (Filme) getActivity().getIntent().getSerializableExtra("MOVIE_DETAILS");
 
-        listtrailers = (RecyclerView) view.findViewById(R.id.recyclerview_trailers);
-        configuracaTrailersAdapter();
-        loadTrailer();
+        listreviews = (RecyclerView) view.findViewById(R.id.recyclerview_reviews);
+        configuracaReviewsoAdapter();
+        lista_de_reviews();
 
         return view;
     }
 
-    private void configuracaTrailersAdapter() {
-        listtrailers.setHasFixedSize(true);
+    private void configuracaReviewsoAdapter() {
 
-        listTrailerAdapter = new TrailersAdapter();
+        listreviews.setHasFixedSize(true);
+
+        listReviewsAdapter = new ReviewsAdapter();
 
         RecyclerView.LayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 1);
-        listtrailers.setLayoutManager(gridLayoutManager);
-        listTrailerAdapter.setClickListener(TrailersFragment.this);
-        listtrailers.setAdapter(listTrailerAdapter);
+        listreviews.setLayoutManager(gridLayoutManager);
+        listreviews.setAdapter(listReviewsAdapter);
+
     }
 
-    private void loadTrailer() {
+    private void lista_de_reviews() {
 
         String chaveAPI = BuildConfig.chaveAPI;
-        ApiService.getInstance().Trailers(String.valueOf(filme.getId()), chaveAPI).enqueue(new Callback<TrailersResult>() {
+        ApiService.getInstance().Reviews(String.valueOf(filme.getId()), chaveAPI).enqueue(new Callback<ReviewsResult>() {
             @Override
-            public void onResponse(Call<TrailersResult> call, Response<TrailersResult> response) {
+            public void onResponse(Call<ReviewsResult> call, Response<ReviewsResult> response) {
 
                 if (response.isSuccessful()) {
-                    trailers = TrailersMapper.ResponseToDominio(response.body().getResults());
-                    listTrailerAdapter.setTrailers(trailers);
+                    listReviewsAdapter.setReviews(ReviewsMapper.ResponseToDominio(response.body().getResults()));
                 } else {
                     Toast.makeText(getContext(), R.string.error_obtain_lists, Toast.LENGTH_LONG).show();
                 }
             }
 
             @Override
-            public void onFailure(Call<TrailersResult> call, Throwable t) {
+            public void onFailure(Call<ReviewsResult> call, Throwable t) {
                 Toast.makeText(getContext(), R.string.failure_obtain_lists, Toast.LENGTH_LONG).show();
             }
         });
     }
-
-    @Override
-    public void onItemClick(View view, int position) {
-        Intent goToYoutube = new Intent(Intent.ACTION_VIEW, Uri.parse("vnd.youtube://" + trailers.get(position).getKey()));
-        startActivity(goToYoutube);
-    }
-
 }

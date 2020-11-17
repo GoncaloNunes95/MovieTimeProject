@@ -1,4 +1,4 @@
-package com.example.movietime;
+package com.example.movietime.main.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,6 +11,10 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.movietime.BuildConfig;
+import com.example.movietime.adapters.FilmesAdapter;
+import com.example.movietime.R;
+import com.example.movietime.moviedetails.activity.TabbDetailsActivity;
 import com.example.movietime.data.Filme;
 import com.example.movietime.data.mapper.FilmeMapper;
 import com.example.movietime.network.ApiService;
@@ -20,11 +24,10 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class UpComingMoviesFragment extends Fragment implements FilmesAdapter.ItemMovieClickListener {
+public class PopularMoviesFragment extends Fragment implements FilmesAdapter.ItemMovieClickListener {
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
     private RecyclerView listdados;
     private FilmesAdapter listaFilmesAdapter;
     View v;
@@ -32,11 +35,11 @@ public class UpComingMoviesFragment extends Fragment implements FilmesAdapter.It
     private String mParam1;
     private String mParam2;
 
-    public UpComingMoviesFragment() {
+    public PopularMoviesFragment() {
     }
 
-    public static UpComingMoviesFragment newInstance(String param1, String param2) {
-        UpComingMoviesFragment fragment = new UpComingMoviesFragment();
+    public static PopularMoviesFragment newInstance(String param1, String param2) {
+        PopularMoviesFragment fragment = new PopularMoviesFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -55,11 +58,12 @@ public class UpComingMoviesFragment extends Fragment implements FilmesAdapter.It
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        v = inflater.inflate(R.layout.fragment_up_coming_movies, container, false);
-        listdados = (RecyclerView) v.findViewById(R.id.recyclerView_upcoming_movies);
+        v = inflater.inflate(R.layout.fragment_popular_movies, container, false);
+        listdados = (RecyclerView) v.findViewById(R.id.recyclerView_popular_movies);
         configuracaoAdapter();
         lista_de_filmes();
         return v;
+
     }
 
     private void configuracaoAdapter() {
@@ -77,9 +81,10 @@ public class UpComingMoviesFragment extends Fragment implements FilmesAdapter.It
     private void lista_de_filmes() {
 
         String chaveAPI = BuildConfig.chaveAPI;
-        ApiService.getInstance().FilmesUpComing(chaveAPI).enqueue(new Callback<FilmesResult>() {
+        ApiService.getInstance().FilmesPopulares(chaveAPI).enqueue(new Callback<FilmesResult>() {
             @Override
             public void onResponse(Call<FilmesResult> call, Response<FilmesResult> response) {
+
                 if (response.isSuccessful()) {
                     listaFilmesAdapter.setFilmes(FilmeMapper.ResponseToDominio(response.body().getResults()));
                 } else {
@@ -102,5 +107,4 @@ public class UpComingMoviesFragment extends Fragment implements FilmesAdapter.It
         startActivity(goToDetails);
 
     }
-
 }

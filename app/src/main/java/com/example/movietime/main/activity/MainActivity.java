@@ -1,4 +1,4 @@
-package com.example.movietime;
+package com.example.movietime.main.activity;
 
 import android.content.Context;
 import android.content.Intent;
@@ -14,6 +14,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.fragment.app.Fragment;
 
+import com.example.movietime.BottomNavigationBehavior;
+import com.example.movietime.database.DBHelper;
+import com.example.movietime.autentication.EditProfile;
+import com.example.movietime.main.fragments.FavoriteMovieFragment;
+import com.example.movietime.autentication.LoginActivity;
+import com.example.movietime.main.fragments.PopularMoviesFragment;
+import com.example.movietime.R;
+import com.example.movietime.autentication.Session;
+import com.example.movietime.main.fragments.TopRatedMoviesFragment;
+import com.example.movietime.main.fragments.UpComingMoviesFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {

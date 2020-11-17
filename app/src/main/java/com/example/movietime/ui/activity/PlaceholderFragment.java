@@ -1,4 +1,4 @@
-package com.example.movietime.ui.main;
+package com.example.movietime.ui.activity;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

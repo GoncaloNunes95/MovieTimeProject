@@ -1,4 +1,4 @@
-package com.example.movietime.ui.main;
+package com.example.movietime.ui.activity;
 
 import androidx.arch.core.util.Function;
 import androidx.lifecycle.LiveData;

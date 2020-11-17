@@ -9,6 +9,8 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.movietime.autentication.LoginActivity;
+
 public class Screen extends AppCompatActivity {
 
     private TextView tv;

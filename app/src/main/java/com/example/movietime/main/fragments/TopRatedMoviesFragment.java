@@ -1,4 +1,4 @@
-package com.example.movietime;
+package com.example.movietime.main.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,6 +11,10 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.movietime.BuildConfig;
+import com.example.movietime.adapters.FilmesAdapter;
+import com.example.movietime.R;
+import com.example.movietime.moviedetails.activity.TabbDetailsActivity;
 import com.example.movietime.data.Filme;
 import com.example.movietime.data.mapper.FilmeMapper;
 import com.example.movietime.network.ApiService;

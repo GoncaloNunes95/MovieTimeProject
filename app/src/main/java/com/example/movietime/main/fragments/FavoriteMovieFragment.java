@@ -1,4 +1,4 @@
-package com.example.movietime;
+package com.example.movietime.main.fragments;
 
 import android.content.Context;
 import android.content.Intent;
@@ -13,6 +13,10 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.movietime.database.DBHelper;
+import com.example.movietime.adapters.FilmesAdapter;
+import com.example.movietime.R;
+import com.example.movietime.moviedetails.activity.TabbDetailsActivity;
 import com.example.movietime.data.Filme;
 
 import java.util.ArrayList;

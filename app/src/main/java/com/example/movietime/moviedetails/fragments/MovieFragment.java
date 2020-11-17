@@ -1,4 +1,4 @@
-package com.example.movietime;
+package com.example.movietime.moviedetails.fragments;
 
 import android.content.Context;
 import android.content.Intent;
@@ -6,7 +6,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,11 +15,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.movietime.database.DBHelper;
+import com.example.movietime.R;
+import com.example.movietime.autentication.Session;
+import com.example.movietime.autentication.LoginActivity;
 import com.example.movietime.data.Filme;
-import com.example.movietime.data.Trailers;
 import com.squareup.picasso.Picasso;
-
-import java.util.List;
 
 public class MovieFragment extends Fragment {
 

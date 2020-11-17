@@ -1,4 +1,4 @@
-package com.example.movietime;
+package com.example.movietime.database;
 
 import android.content.ContentValues;
 import android.content.Context;

@@ -1,4 +1,4 @@
-package com.example.movietime;
+package com.example.movietime.autentication;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -14,6 +14,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.movietime.database.DBHelper;
+import com.example.movietime.R;
+import com.example.movietime.main.activity.MainActivity;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 

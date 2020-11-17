@@ -20,12 +20,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".LoginActivity" />
-        <activity android:name=".RegisterActivity" />
-        <activity android:name=".MainActivity" />
-        <activity android:name=".EditProfile" />
+        <activity android:name=".autentication.LoginActivity" />
+        <activity android:name=".autentication.RegisterActivity" />
+        <activity android:name=".main.activity.MainActivity" />
+        <activity android:name=".autentication.EditProfile" />
         <activity
-            android:name=".TabbDetailsActivity"
+            android:name=".moviedetails.activity.TabbDetailsActivity"
             android:label="@string/title_activity_tabb_details"
             android:theme="@style/Theme.MovieTime.NoActionBar" />
     </application>

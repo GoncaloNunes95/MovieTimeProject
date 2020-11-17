@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     android:orientation="vertical"
-    tools:context=".PopularMoviesFragment">
+    tools:context=".main.fragments.PopularMoviesFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView_popular_movies"

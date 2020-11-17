@@ -1,4 +1,4 @@
-package com.example.movietime.ui.main;
+package com.example.movietime.ui.activity;
 
 import android.content.Context;
 
@@ -8,11 +8,10 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
-import com.example.movietime.MovieFragment;
-import com.example.movietime.PopularMoviesFragment;
+import com.example.movietime.moviedetails.fragments.MovieFragment;
 import com.example.movietime.R;
-import com.example.movietime.ReviewsFragment;
-import com.example.movietime.TrailersFragment;
+import com.example.movietime.moviedetails.fragments.ReviewsFragment;
+import com.example.movietime.moviedetails.fragments.TrailersFragment;
 
 public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
