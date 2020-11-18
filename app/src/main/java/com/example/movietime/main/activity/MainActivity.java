@@ -130,7 +130,6 @@ public class MainActivity extends AppCompatActivity implements FilmesAdapter.Ite
             public boolean onQueryTextSubmit(String query) {
                 Fragment fragment = new SearchFragment(query);
                 getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
-                bottomNavigationView.getMenu().getItem(0).setCheckable(false);
                 return true;
             }
 
