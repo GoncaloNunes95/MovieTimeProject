@@ -102,7 +102,7 @@ public class EditProfile extends AppCompatActivity {
                             editor.putString("Password", senha1);
                             editor.commit();
 
-                            Toast.makeText(this, getString(R.string.update_data_saved) + username, Toast.LENGTH_LONG).show();
+                            Toast.makeText(this, getString(R.string.update_data_saved) + username + "!", Toast.LENGTH_LONG).show();
 
                             startActivity(new Intent(EditProfile.this, MainActivity.class));
 

@@ -17,7 +17,7 @@
     <string name="different_passwords">The two passwords are not the same, try again!</string>
     <string name="success_register">Successful registration!</string>
     <string name="invalid_register">Invalid registration, try again!</string>
-    <string name="update_data_saved">Your data has been saved successfully!</string>
+    <string name="update_data_saved">Your data has been saved successfully</string>
     <string name="error_update_data">Your data has not been updated, please try again!</string>
     <string name="error_login">Wrong login, try again!</string>
     <string name="btn_logout">Logout</string>

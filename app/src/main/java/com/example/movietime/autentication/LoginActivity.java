@@ -76,7 +76,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                         session.setLoggedin(true);
 
-                        Toast.makeText(LoginActivity.this, "Bem Vindo " + username, Toast.LENGTH_LONG).show();
+                        Toast.makeText(LoginActivity.this, "Bem Vindo/a " + username, Toast.LENGTH_LONG).show();
 
                         SharedPreferences sharedPreferences = LoginActivity.this.getSharedPreferences("User", Context.MODE_PRIVATE);
                         SharedPreferences.Editor editor = sharedPreferences.edit();
