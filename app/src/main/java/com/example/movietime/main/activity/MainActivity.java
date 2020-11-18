@@ -1,12 +1,16 @@
 package com.example.movietime.main.activity;
 
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.nfc.Tag;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.SearchView;
 import android.widget.Toast;
 
@@ -57,6 +61,7 @@ public class MainActivity extends AppCompatActivity implements FilmesAdapter.Ite
         setContentView(R.layout.activity_main);
 
         getSupportActionBar().setSubtitle("Movies");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setIcon(R.mipmap.logotipo);
 
@@ -114,7 +119,9 @@ public class MainActivity extends AppCompatActivity implements FilmesAdapter.Ite
                     break;
 
             }
-            getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment)
+                    .addToBackStack(fragment.getClass().getName())
+                    .commit();
             return true;
         }
     };
@@ -129,7 +136,10 @@ public class MainActivity extends AppCompatActivity implements FilmesAdapter.Ite
             @Override
             public boolean onQueryTextSubmit(String query) {
                 Fragment fragment = new SearchFragment(query);
-                getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment)
+                        .addToBackStack(fragment.getClass().getName())
+                        .commit();
+                //Log.d("Aquiiiiiiiiiiii", fragment.getClass().getName());
                 return true;
             }
 
@@ -138,6 +148,22 @@ public class MainActivity extends AppCompatActivity implements FilmesAdapter.Ite
                 return false;
             }
         });
+        int searchCloseButtonId = searchView.getContext().getResources()
+                .getIdentifier("android:id/search_close_btn", null, null);
+        searchView.findViewById(searchCloseButtonId).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getSupportFragmentManager().popBackStack();
+            }
+        });
+
+        /*searchView.setOnCloseListener(new SearchView.OnCloseListener() {
+            @Override
+            public boolean onClose() {
+                getSupportFragmentManager().popBackStack();
+                return false;
+            }
+        });*/
         return true;
     }
 
@@ -155,6 +181,9 @@ public class MainActivity extends AppCompatActivity implements FilmesAdapter.Ite
 
             case R.id.update_profile:
                 startActivity(new Intent(MainActivity.this, EditProfile.class));
+                break;
+            case android.R.id.home:
+                getSupportFragmentManager().popBackStack();
                 break;
         }
         return super.onOptionsItemSelected(item);
