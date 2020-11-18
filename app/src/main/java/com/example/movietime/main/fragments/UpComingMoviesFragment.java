@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -32,6 +33,7 @@ public class UpComingMoviesFragment extends Fragment implements FilmesAdapter.It
     private RecyclerView listdados;
     private FilmesAdapter listaFilmesAdapter;
     View v;
+    int i = 1;
 
     private String mParam1;
     private String mParam2;
@@ -62,7 +64,8 @@ public class UpComingMoviesFragment extends Fragment implements FilmesAdapter.It
         v = inflater.inflate(R.layout.fragment_up_coming_movies, container, false);
         listdados = (RecyclerView) v.findViewById(R.id.recyclerView_upcoming_movies);
         configuracaoAdapter();
-        lista_de_filmes();
+        lista_de_filmes(1);
+        getMoreUpComingMovies();
         return v;
     }
 
@@ -78,10 +81,10 @@ public class UpComingMoviesFragment extends Fragment implements FilmesAdapter.It
 
     }
 
-    private void lista_de_filmes() {
+    private void lista_de_filmes(int i) {
 
         String chaveAPI = BuildConfig.chaveAPI;
-        ApiService.getInstance().FilmesUpComing(chaveAPI).enqueue(new Callback<FilmesResult>() {
+        ApiService.getInstance().FilmesUpComing(i, chaveAPI).enqueue(new Callback<FilmesResult>() {
             @Override
             public void onResponse(Call<FilmesResult> call, Response<FilmesResult> response) {
                 if (response.isSuccessful()) {
@@ -94,6 +97,31 @@ public class UpComingMoviesFragment extends Fragment implements FilmesAdapter.It
             @Override
             public void onFailure(Call<FilmesResult> call, Throwable t) {
                 Toast.makeText(getActivity(), R.string.failure_obtain_lists, Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    private void getMoreUpComingMovies(){
+        i=1;
+        listdados.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                if(!listdados.canScrollVertically(1) && newState==RecyclerView.SCROLL_STATE_IDLE) {
+                    if(i == 1000)
+                        return;
+                    else
+                        i++;
+                    listdados.scrollToPosition(0);
+                    lista_de_filmes(i);
+                } else if(!listdados.canScrollVertically(-1) && newState==RecyclerView.SCROLL_STATE_IDLE) {
+                    if(i == 1)
+                        return;
+                    else
+                        i--;
+                    listdados.scrollToPosition(listaFilmesAdapter.getItemCount()-1);
+                    lista_de_filmes(i);
+                }
             }
         });
     }

@@ -122,16 +122,4 @@ public class MovieFragment extends Fragment {
             favorite.setBackgroundResource(R.drawable.favorite_not_check);
 
     }
-
-    private void logout() {
-
-        session.setLoggedin(false);
-        SharedPreferences prefs = getContext().getSharedPreferences("User", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.clear();
-        editor.apply();
-        getActivity().finish();
-        startActivity(new Intent(getContext(), LoginActivity.class));
-
-    }
 }
