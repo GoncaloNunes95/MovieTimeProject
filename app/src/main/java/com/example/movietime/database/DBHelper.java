@@ -46,9 +46,9 @@ public class DBHelper extends SQLiteOpenHelper {
         return res;
     }
 
-    public String ValidarExistenciaFavorito(int id) {
+    public String ValidarExistenciaFavorito(String username, int id) {
         SQLiteDatabase db = getReadableDatabase();
-        Cursor c = db.query("FavoriteMovies", null, "IdMovie=?", new String[]{String.valueOf(id)}, null, null, null, null);
+        Cursor c = db.query("FavoriteMovies", null, "AccountUser=? AND IdMovie=?", new String[]{username, String.valueOf(id)}, null, null, null, null);
 
         if (c.getCount() > 0) {
             return "1";
@@ -57,10 +57,10 @@ public class DBHelper extends SQLiteOpenHelper {
         return "0";
     }
 
-    public void RemoveFavorito(int id) {
+    public void RemoveFavorito(String username, int id) {
 
         SQLiteDatabase db = getWritableDatabase();
-        db.delete("FavoriteMovies", "IdMovie=?", new String[]{String.valueOf(id)});
+        db.delete("FavoriteMovies", "AccountUser=? AND IdMovie=?", new String[]{username, String.valueOf(id)});
     }
 
     public String SelectFavoritosUser(String username) {

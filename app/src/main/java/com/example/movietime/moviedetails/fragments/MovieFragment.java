@@ -92,10 +92,10 @@ public class MovieFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                String result = db.ValidarExistenciaFavorito(filme.getId());
+                String result = db.ValidarExistenciaFavorito(user, filme.getId());
 
                 if (result.equals("1")) {
-                    db.RemoveFavorito(filme.getId());
+                    db.RemoveFavorito(user, filme.getId());
                     Toast.makeText(getContext(), R.string.removed_favorites, Toast.LENGTH_LONG).show();
                     favorite.setBackgroundResource(R.drawable.favorite_not_check);
                 } else {
@@ -114,7 +114,7 @@ public class MovieFragment extends Fragment {
 
     private void StatusFavorite() {
 
-        String result = db.ValidarExistenciaFavorito(filme.getId());
+        String result = db.ValidarExistenciaFavorito(user, filme.getId());
 
         if (result.equals("1"))
             favorite.setBackgroundResource(R.drawable.favorite_check);
