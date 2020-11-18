@@ -25,4 +25,7 @@ public interface IFilmesService {
 
     @GET("movie/{movie_id}/videos")
     Call<TrailersResult> Trailers(@Path("movie_id") String id, @Query("api_key") String chaveAPI);
+
+    @GET("search/movie")
+    Call<FilmesResult> SearchMovies(@Query("query") String search, @Query("api_key") String key);
 }

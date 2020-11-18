@@ -22,7 +22,7 @@
         </activity>
         <activity android:name=".autentication.LoginActivity" />
         <activity android:name=".autentication.RegisterActivity" />
-        <activity android:name=".main.activity.MainActivity" />
+        <activity android:name=".main.activity.MainActivity"/>
         <activity android:name=".autentication.EditProfile" />
         <activity
             android:name=".moviedetails.activity.TabbDetailsActivity"
