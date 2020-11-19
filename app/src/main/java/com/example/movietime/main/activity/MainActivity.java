@@ -119,6 +119,7 @@ public class MainActivity extends AppCompatActivity implements FilmesAdapter.Ite
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
+                searchView.clearFocus();
                 Fragment fragment = new SearchFragment(query);
                 getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
                 return true;
