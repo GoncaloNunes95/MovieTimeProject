@@ -35,6 +35,7 @@ public class TabbDetailsActivity extends AppCompatActivity {
         session = new Session(this);
 
         if (!session.loggedin()) {
+            session.setLoggedin(false);
             SingletonUser.singleton().logout();
             finish();
             startActivity(new Intent(TabbDetailsActivity.this, LoginActivity.class));

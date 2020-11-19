@@ -16,7 +16,6 @@ public class SingletonUser {
     SharedPreferences prefs;
     SharedPreferences.Editor sharedPrefsEditor;
     String username, email, password;
-    Session session;
 
     public static SingletonUser singleton(Context context) {
         if (singleton_instance == null) {
@@ -46,7 +45,6 @@ public class SingletonUser {
     }
 
     public void logout() {
-        session.setLoggedin(false);
         prefs = context.getSharedPreferences("User", Context.MODE_PRIVATE);
         sharedPrefsEditor = prefs.edit();
         sharedPrefsEditor.clear();

@@ -57,6 +57,7 @@ public class MainActivity extends AppCompatActivity implements FilmesAdapter.Ite
         session = new Session(this);
 
         if (!session.loggedin()) {
+            session.setLoggedin(false);
             SingletonUser.singleton().logout();
             finish();
             startActivity(new Intent(MainActivity.this, LoginActivity.class));
@@ -159,6 +160,7 @@ public class MainActivity extends AppCompatActivity implements FilmesAdapter.Ite
         switch (id) {
 
             case R.id.btnLogout:
+                session.setLoggedin(false);
                 SingletonUser.singleton().logout();
                 finish();
                 startActivity(new Intent(MainActivity.this, LoginActivity.class));

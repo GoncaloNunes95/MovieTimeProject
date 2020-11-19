@@ -44,9 +44,7 @@
     <string name="tab_text_2">Trailers</string>
     <string name="tab_text_3">Reviews</string>
     <string name="title_activity_tabb_details">TabbDetailsActivity</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="search_btn">Search</string>
     <string name="there_are_no_reviews">There are no reviews</string>
-    <string name="there_are_no_tarilers">There are no tarilers</string>
+    <string name="there_are_no_trailers">There are no trailers</string>
 </resources>

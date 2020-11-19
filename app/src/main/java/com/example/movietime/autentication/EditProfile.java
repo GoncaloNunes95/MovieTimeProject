@@ -41,7 +41,10 @@ public class EditProfile extends AppCompatActivity {
         session = new Session(this);
 
         if (!session.loggedin()) {
-            logout();
+            session.setLoggedin(false);
+            SingletonUser.singleton().logout();
+            finish();
+            startActivity(new Intent(EditProfile.this, LoginActivity.class));
         }
 
         user = (SingletonUser.singleton().fetchValueString("Username"));
@@ -115,17 +118,4 @@ public class EditProfile extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
-    private void logout() {
-
-        session.setLoggedin(false);
-        SharedPreferences prefs = EditProfile.this.getSharedPreferences("User", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.clear();
-        editor.apply();
-        finish();
-        startActivity(new Intent(EditProfile.this, LoginActivity.class));
-
-    }
-
 }
