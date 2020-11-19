@@ -33,7 +33,6 @@ public class PopularMoviesFragment extends Fragment implements FilmesAdapter.Ite
     int i = 1;
 
     public PopularMoviesFragment() {
-
     }
 
     @Override
@@ -44,7 +43,6 @@ public class PopularMoviesFragment extends Fragment implements FilmesAdapter.Ite
         lista_de_filmes(1);
         getMorePopularMovies();
         return v;
-
     }
 
     private void configuracaoAdapter() {

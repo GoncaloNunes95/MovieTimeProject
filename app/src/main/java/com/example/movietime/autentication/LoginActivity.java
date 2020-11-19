@@ -36,7 +36,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         getSupportActionBar().setIcon(R.mipmap.logotipo);
 
         db = new DBHelper(this);
-
         session = new Session(this);
 
         SingletonUser.singleton(this.getApplicationContext());
@@ -77,7 +76,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                         session.setLoggedin(true);
 
-                        Toast.makeText(LoginActivity.this, "Bem Vindo/a " + username, Toast.LENGTH_LONG).show();
+                        Toast.makeText(LoginActivity.this, "Welcome " + username, Toast.LENGTH_LONG).show();
 
                         SingletonUser.singleton().storeValueString("Username", username);
                         SingletonUser.singleton().storeValueString("Email", c.getString(1));

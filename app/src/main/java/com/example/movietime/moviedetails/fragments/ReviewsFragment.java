@@ -42,6 +42,7 @@ public class ReviewsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_reviews, container, false);
+
         db = new DBHelper(getContext());
 
         user = (SingletonUser.singleton().fetchValueString("Username"));

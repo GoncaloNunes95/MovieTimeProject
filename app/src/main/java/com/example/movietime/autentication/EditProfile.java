@@ -1,6 +1,8 @@
 package com.example.movietime.autentication;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -23,7 +25,7 @@ public class EditProfile extends AppCompatActivity {
     private TextInputEditText Password1, Password2;
     private EditText et_email;
     private String user, email, password;
-
+    Session session;
     DBHelper db;
 
     @Override
@@ -36,6 +38,11 @@ public class EditProfile extends AppCompatActivity {
         getSupportActionBar().setIcon(R.mipmap.logotipo);
 
         db = new DBHelper(this);
+        session = new Session(this);
+
+        if (!session.loggedin()) {
+            logout();
+        }
 
         user = (SingletonUser.singleton().fetchValueString("Username"));
         email = (SingletonUser.singleton().fetchValueString("Email"));
@@ -107,6 +114,18 @@ public class EditProfile extends AppCompatActivity {
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void logout() {
+
+        session.setLoggedin(false);
+        SharedPreferences prefs = EditProfile.this.getSharedPreferences("User", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.clear();
+        editor.apply();
+        finish();
+        startActivity(new Intent(EditProfile.this, LoginActivity.class));
+
     }
 
 }

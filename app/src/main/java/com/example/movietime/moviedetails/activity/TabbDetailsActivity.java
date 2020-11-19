@@ -1,14 +1,13 @@
 package com.example.movietime.moviedetails.activity;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.movietime.R;
+import com.example.movietime.SingletonUser;
 import com.example.movietime.autentication.LoginActivity;
 import com.example.movietime.autentication.Session;
 import com.example.movietime.data.Filme;
@@ -36,21 +35,11 @@ public class TabbDetailsActivity extends AppCompatActivity {
         session = new Session(this);
 
         if (!session.loggedin()) {
-            logout();
+            SingletonUser.singleton().logout();
+            finish();
+            startActivity(new Intent(TabbDetailsActivity.this, LoginActivity.class));
         }
 
         filme = (Filme) getIntent().getSerializableExtra("MOVIE_DETAILS");
-    }
-
-    private void logout() {
-
-        session.setLoggedin(false);
-        SharedPreferences prefs = this.getSharedPreferences("User", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.clear();
-        editor.apply();
-        finish();
-        startActivity(new Intent(this, LoginActivity.class));
-
     }
 }

@@ -104,10 +104,8 @@ public class TopRatedMoviesFragment extends Fragment implements FilmesAdapter.It
 
     @Override
     public void onItemMovieClicked(Filme filme) {
-
         Intent goToDetails = new Intent(getContext(), TabbDetailsActivity.class);
         goToDetails.putExtra("MOVIE_DETAILS", filme);
         startActivity(goToDetails);
-
     }
 }

@@ -23,12 +23,10 @@ public class MovieFragment extends Fragment {
     private Filme filme;
     private ImageButton favorite;
     private DBHelper db;
-    private Session session;
     private String user, email, password;
 
 
     public MovieFragment() {
-
     }
 
     @Override

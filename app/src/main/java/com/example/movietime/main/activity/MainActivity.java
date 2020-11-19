@@ -57,7 +57,9 @@ public class MainActivity extends AppCompatActivity implements FilmesAdapter.Ite
         session = new Session(this);
 
         if (!session.loggedin()) {
-            logout();
+            SingletonUser.singleton().logout();
+            finish();
+            startActivity(new Intent(MainActivity.this, LoginActivity.class));
         }
 
         user = (SingletonUser.singleton().fetchValueString("Username"));
@@ -157,7 +159,9 @@ public class MainActivity extends AppCompatActivity implements FilmesAdapter.Ite
         switch (id) {
 
             case R.id.btnLogout:
-                logout();
+                SingletonUser.singleton().logout();
+                finish();
+                startActivity(new Intent(MainActivity.this, LoginActivity.class));
                 break;
 
             case R.id.update_profile:
@@ -173,18 +177,6 @@ public class MainActivity extends AppCompatActivity implements FilmesAdapter.Ite
         Intent goToDetails = new Intent(this, TabbDetailsActivity.class);
         goToDetails.putExtra("MOVIE_DETAILS", filme);
         startActivity(goToDetails);
-
-    }
-
-    private void logout() {
-
-        session.setLoggedin(false);
-        SharedPreferences prefs = MainActivity.this.getSharedPreferences("User", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.clear();
-        editor.apply();
-        finish();
-        startActivity(new Intent(MainActivity.this, LoginActivity.class));
 
     }
 }
