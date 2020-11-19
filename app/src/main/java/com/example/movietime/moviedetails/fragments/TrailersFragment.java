@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.movietime.BuildConfig;
@@ -34,9 +35,6 @@ import retrofit2.Response;
 
 public class TrailersFragment extends Fragment implements TrailersAdapter.ItemClickListener {
 
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
     private DBHelper db;
     private Session session;
     private String email, password, user;
@@ -44,30 +42,11 @@ public class TrailersFragment extends Fragment implements TrailersAdapter.ItemCl
     private TrailersAdapter listTrailerAdapter;
     private Filme filme;
     public List<Trailers> trailers;
-
-    private String mParam1;
-    private String mParam2;
+    private TextView tv_not_show_items;
 
     public TrailersFragment() {
     }
 
-    public static TrailersFragment newInstance(String param1, String param2) {
-        TrailersFragment fragment = new TrailersFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -86,6 +65,8 @@ public class TrailersFragment extends Fragment implements TrailersAdapter.ItemCl
         }
 
         filme = (Filme) getActivity().getIntent().getSerializableExtra("MOVIE_DETAILS");
+
+        tv_not_show_items = (TextView) view.findViewById(R.id.not_show_items);
 
         listtrailers = (RecyclerView) view.findViewById(R.id.recyclerview_trailers);
         configuracaTrailersAdapter();
@@ -113,8 +94,13 @@ public class TrailersFragment extends Fragment implements TrailersAdapter.ItemCl
             public void onResponse(Call<TrailersResult> call, Response<TrailersResult> response) {
 
                 if (response.isSuccessful()) {
-                    trailers = TrailersMapper.ResponseToDominio(response.body().getResults());
-                    listTrailerAdapter.setTrailers(trailers);
+                    if (response.body().getResults().size() > 0) {
+                        trailers = TrailersMapper.ResponseToDominio(response.body().getResults());
+                        listTrailerAdapter.setTrailers(trailers);
+                        tv_not_show_items.setVisibility(View.INVISIBLE);
+                    }else {
+                        tv_not_show_items.setVisibility(View.VISIBLE);
+                    }
                 } else {
                     Toast.makeText(getContext(), R.string.error_obtain_lists, Toast.LENGTH_LONG).show();
                 }

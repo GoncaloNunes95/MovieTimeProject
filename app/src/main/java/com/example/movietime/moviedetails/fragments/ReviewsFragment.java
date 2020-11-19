@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.movietime.BuildConfig;
@@ -37,30 +38,10 @@ public class ReviewsFragment extends Fragment {
     private String email, password, user;
     private ReviewsAdapter listReviewsAdapter;
     private RecyclerView listreviews;
+    private TextView tv_not_show_items;
     private Filme filme;
 
-    private String mParam1;
-    private String mParam2;
-
     public ReviewsFragment() {
-    }
-
-    public static ReviewsFragment newInstance(String param1, String param2) {
-        ReviewsFragment fragment = new ReviewsFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
@@ -80,6 +61,8 @@ public class ReviewsFragment extends Fragment {
         }
 
         filme = (Filme) getActivity().getIntent().getSerializableExtra("MOVIE_DETAILS");
+
+        tv_not_show_items = (TextView) view.findViewById(R.id.not_show_items);
 
         listreviews = (RecyclerView) view.findViewById(R.id.recyclerview_reviews);
         configuracaReviewsoAdapter();
@@ -108,7 +91,12 @@ public class ReviewsFragment extends Fragment {
             public void onResponse(Call<ReviewsResult> call, Response<ReviewsResult> response) {
 
                 if (response.isSuccessful()) {
-                    listReviewsAdapter.setReviews(ReviewsMapper.ResponseToDominio(response.body().getResults()));
+                    if (response.body().getResults().size() > 0){
+                        listReviewsAdapter.setReviews(ReviewsMapper.ResponseToDominio(response.body().getResults()));
+                        tv_not_show_items.setVisibility(View.INVISIBLE);
+                    }else {
+                        tv_not_show_items.setVisibility(View.VISIBLE);
+                    }
                 } else {
                     Toast.makeText(getContext(), R.string.error_obtain_lists, Toast.LENGTH_LONG).show();
                 }

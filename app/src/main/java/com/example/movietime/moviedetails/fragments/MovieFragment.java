@@ -24,34 +24,15 @@ import com.squareup.picasso.Picasso;
 
 public class MovieFragment extends Fragment {
 
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
     private Filme filme;
     private ImageButton favorite;
     private DBHelper db;
     private Session session;
     private String user, email, password;
 
-    private String mParam1;
-    private String mParam2;
 
     public MovieFragment() {
 
-    }
-
-    public static MovieFragment newInstance(String param1, String param2) {
-        MovieFragment fragment = new MovieFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
     }
 
     @Override

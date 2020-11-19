@@ -1,57 +1,39 @@
 package com.example.movietime.main.activity;
 
-import android.app.AlertDialog;
-import android.app.FragmentTransaction;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.nfc.Tag;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.SearchView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
-import androidx.core.view.MenuItemCompat;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.movietime.BottomNavigationBehavior;
-import com.example.movietime.BuildConfig;
-import com.example.movietime.adapters.FilmesAdapter;
-import com.example.movietime.data.Filme;
-import com.example.movietime.data.mapper.FilmeMapper;
-import com.example.movietime.database.DBHelper;
-import com.example.movietime.autentication.EditProfile;
-import com.example.movietime.main.fragments.FavoriteMovieFragment;
-import com.example.movietime.autentication.LoginActivity;
-import com.example.movietime.main.fragments.PopularMoviesFragment;
 import com.example.movietime.R;
+import com.example.movietime.adapters.FilmesAdapter;
+import com.example.movietime.autentication.EditProfile;
+import com.example.movietime.autentication.LoginActivity;
 import com.example.movietime.autentication.Session;
+import com.example.movietime.data.Filme;
+import com.example.movietime.database.DBHelper;
+import com.example.movietime.main.fragments.FavoriteMovieFragment;
+import com.example.movietime.main.fragments.PopularMoviesFragment;
 import com.example.movietime.main.fragments.SearchFragment;
 import com.example.movietime.main.fragments.TopRatedMoviesFragment;
 import com.example.movietime.main.fragments.UpComingMoviesFragment;
 import com.example.movietime.moviedetails.activity.TabbDetailsActivity;
-import com.example.movietime.network.ApiService;
-import com.example.movietime.network.response.FilmesResult;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
-public class MainActivity extends AppCompatActivity implements FilmesAdapter.ItemMovieClickListener{
+public class MainActivity extends AppCompatActivity implements FilmesAdapter.ItemMovieClickListener {
 
     private BottomNavigationView bottomNavigationView;
     private DBHelper db;
@@ -165,7 +147,7 @@ public class MainActivity extends AppCompatActivity implements FilmesAdapter.Ite
         searchView.findViewById(searchCloseButtonId).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                searchView.setQuery("",false);
+                searchView.setQuery("", false);
                 //searchView.onActionViewCollapsed();
                 if (flag == 0)
                     getSupportFragmentManager().beginTransaction().replace(R.id.container, new PopularMoviesFragment()).commit();
