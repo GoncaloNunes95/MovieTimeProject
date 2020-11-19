@@ -38,7 +38,6 @@
         android:textSize="20sp"
         android:textColor="@color/black"
         android:textStyle="italic"
-        android:visibility="invisible"
         android:text="@string/there_are_no_tarilers"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

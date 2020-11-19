@@ -93,7 +93,7 @@ public class ReviewsFragment extends Fragment {
                 if (response.isSuccessful()) {
                     if (response.body().getResults().size() > 0){
                         listReviewsAdapter.setReviews(ReviewsMapper.ResponseToDominio(response.body().getResults()));
-                        tv_not_show_items.setVisibility(View.INVISIBLE);
+                        tv_not_show_items.setVisibility(View.GONE);
                     }else {
                         tv_not_show_items.setVisibility(View.VISIBLE);
                     }
