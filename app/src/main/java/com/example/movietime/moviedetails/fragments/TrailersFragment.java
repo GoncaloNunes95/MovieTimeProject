@@ -97,7 +97,7 @@ public class TrailersFragment extends Fragment implements TrailersAdapter.ItemCl
                     if (response.body().getResults().size() > 0) {
                         trailers = TrailersMapper.ResponseToDominio(response.body().getResults());
                         listTrailerAdapter.setTrailers(trailers);
-                        tv_not_show_items.setVisibility(View.INVISIBLE);
+                        tv_not_show_items.setVisibility(View.GONE);
                     }else {
                         tv_not_show_items.setVisibility(View.VISIBLE);
                     }
