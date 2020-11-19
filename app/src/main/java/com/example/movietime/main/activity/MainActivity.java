@@ -178,9 +178,9 @@ public class MainActivity extends AppCompatActivity implements FilmesAdapter.Ite
             case R.id.update_profile:
                 startActivity(new Intent(MainActivity.this, EditProfile.class));
                 break;
-            case android.R.id.home:
-                getSupportFragmentManager().popBackStack();
-                break;
+//            case android.R.id.home:
+//                getSupportFragmentManager().popBackStack();
+//                break;
         }
         return super.onOptionsItemSelected(item);
     }
