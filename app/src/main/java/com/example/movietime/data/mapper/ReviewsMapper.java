@@ -8,7 +8,6 @@ import java.util.List;
 
 public class ReviewsMapper {
 
-    //Obtém lista de reviews response ( List<ReviewsResponse>  ), e converte para uma lista de reviews ( List<Reviews> reviewslist ).
     public static List<Reviews> ResponseToDominio(List<ReviewsResponse> listaReviewsResponse) {
 
         List<Reviews> reviewsList = new ArrayList<>();

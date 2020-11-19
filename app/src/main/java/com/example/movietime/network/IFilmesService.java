@@ -15,10 +15,10 @@ public interface IFilmesService {
     Call<FilmesResult> FilmesPopulares(@Query("page") int page, @Query("api_key") String chaveAPI);
 
     @GET("movie/top_rated")
-    Call<FilmesResult> FilmesMelhoresClassificados(@Query("page") int page,@Query("api_key") String chaveAPI);
+    Call<FilmesResult> FilmesMelhoresClassificados(@Query("page") int page, @Query("api_key") String chaveAPI);
 
     @GET("movie/upcoming")
-    Call<FilmesResult> FilmesUpComing(@Query("page") int page,@Query("api_key") String chaveAPI);
+    Call<FilmesResult> FilmesUpComing(@Query("page") int page, @Query("api_key") String chaveAPI);
 
     @GET("movie/{movie_id}/reviews")
     Call<ReviewsResult> Reviews(@Path("movie_id") String id, @Query("api_key") String chaveAPI);

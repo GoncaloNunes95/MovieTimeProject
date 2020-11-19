@@ -41,7 +41,7 @@ public class TrailersAdapter extends RecyclerView.Adapter<TrailersAdapter.Traile
         return (trailers != null && trailers.size() > 0) ? trailers.size() : 0;
     }
 
-    static class TrailersViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    static class TrailersViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private TextView trailerFilme;
 
@@ -64,11 +64,11 @@ public class TrailersAdapter extends RecyclerView.Adapter<TrailersAdapter.Traile
         }
     }
 
-    public void setClickListener(ItemClickListener clickListener){
+    public void setClickListener(ItemClickListener clickListener) {
         this.itemClickListener = clickListener;
     }
 
-    public interface ItemClickListener{
+    public interface ItemClickListener {
         void onItemClick(View view, int position);
     }
 

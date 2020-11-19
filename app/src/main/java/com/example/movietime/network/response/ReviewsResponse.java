@@ -8,7 +8,7 @@ public class ReviewsResponse {
         this.content = content;
     }
 
-    public String getContent(){
+    public String getContent() {
         return content;
     }
 }

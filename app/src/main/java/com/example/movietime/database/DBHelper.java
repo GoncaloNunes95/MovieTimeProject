@@ -6,8 +6,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import java.util.ArrayList;
-
 public class DBHelper extends SQLiteOpenHelper {
     private static int versao = 1;
     private static String nome = "MovieTime.db";
@@ -74,10 +72,10 @@ public class DBHelper extends SQLiteOpenHelper {
         return "0";
     }
 
-    public Cursor mostrarFavoritos(String AccountUser){
+    public Cursor mostrarFavoritos(String AccountUser) {
         SQLiteDatabase db = getReadableDatabase();
         Cursor c = db.query("FavoriteMovies", null, "AccountUser=?", new String[]{AccountUser}, null, null, null, null);
-        if(c!=null){
+        if (c != null) {
             c.moveToFirst();
         }
 

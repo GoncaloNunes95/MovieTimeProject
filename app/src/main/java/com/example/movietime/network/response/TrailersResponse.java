@@ -9,11 +9,11 @@ public class TrailersResponse {
         this.name = name;
     }
 
-    public String getKey(){
+    public String getKey() {
         return key;
     }
 
-    public String getName(){
+    public String getName() {
         return name;
     }
 

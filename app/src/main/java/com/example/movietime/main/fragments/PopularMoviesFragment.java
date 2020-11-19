@@ -13,11 +13,11 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.movietime.BuildConfig;
-import com.example.movietime.adapters.FilmesAdapter;
 import com.example.movietime.R;
-import com.example.movietime.moviedetails.activity.TabbDetailsActivity;
+import com.example.movietime.adapters.FilmesAdapter;
 import com.example.movietime.data.Filme;
 import com.example.movietime.data.mapper.FilmeMapper;
+import com.example.movietime.moviedetails.activity.TabbDetailsActivity;
 import com.example.movietime.network.ApiService;
 import com.example.movietime.network.response.FilmesResult;
 
@@ -80,25 +80,25 @@ public class PopularMoviesFragment extends Fragment implements FilmesAdapter.Ite
         });
     }
 
-    private void getMorePopularMovies(){
-        i=1;
+    private void getMorePopularMovies() {
+        i = 1;
         listdados.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
-                if(!listdados.canScrollVertically(1) && newState==RecyclerView.SCROLL_STATE_IDLE) {
-                    if(i == 1000)
+                if (!listdados.canScrollVertically(1) && newState == RecyclerView.SCROLL_STATE_IDLE) {
+                    if (i == 1000)
                         return;
                     else
                         i++;
                     listdados.scrollToPosition(0);
                     lista_de_filmes(i);
-                } else if(!listdados.canScrollVertically(-1) && newState==RecyclerView.SCROLL_STATE_IDLE) {
-                    if(i == 1)
+                } else if (!listdados.canScrollVertically(-1) && newState == RecyclerView.SCROLL_STATE_IDLE) {
+                    if (i == 1)
                         return;
                     else
                         i--;
-                    listdados.scrollToPosition(listaFilmesAdapter.getItemCount()-1);
+                    listdados.scrollToPosition(listaFilmesAdapter.getItemCount() - 1);
                     lista_de_filmes(i);
                 }
             }

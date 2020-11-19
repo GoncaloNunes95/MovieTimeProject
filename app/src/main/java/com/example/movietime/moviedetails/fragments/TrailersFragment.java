@@ -1,29 +1,27 @@
 package com.example.movietime.moviedetails.fragments;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.movietime.BuildConfig;
-import com.example.movietime.database.DBHelper;
 import com.example.movietime.R;
-import com.example.movietime.autentication.Session;
+import com.example.movietime.SingletonUser;
 import com.example.movietime.adapters.TrailersAdapter;
+import com.example.movietime.autentication.Session;
 import com.example.movietime.data.Filme;
 import com.example.movietime.data.Trailers;
 import com.example.movietime.data.mapper.TrailersMapper;
+import com.example.movietime.database.DBHelper;
 import com.example.movietime.network.ApiService;
 import com.example.movietime.network.response.TrailersResult;
 
@@ -47,22 +45,14 @@ public class TrailersFragment extends Fragment implements TrailersAdapter.ItemCl
     public TrailersFragment() {
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_trailers, container, false);
         db = new DBHelper(getContext());
 
-        SharedPreferences prefs = this.getActivity().getSharedPreferences("User", Context.MODE_PRIVATE);
-        String nomeArmazenado = prefs.getString("Username", null);
-        String EmailArmazenado = prefs.getString("Email", null);
-        String PasswordArmazenado = prefs.getString("Password", null);
-
-        if ((nomeArmazenado != null) && (EmailArmazenado != null) && (PasswordArmazenado != null)) {
-            user = prefs.getString("Username", "");
-            email = prefs.getString("Email", "");
-            password = prefs.getString("Password", "");
-        }
+        user = (SingletonUser.singleton().fetchValueString("Username"));
+        email = (SingletonUser.singleton().fetchValueString("Email"));
+        password = (SingletonUser.singleton().fetchValueString("Password"));
 
         filme = (Filme) getActivity().getIntent().getSerializableExtra("MOVIE_DETAILS");
 
@@ -98,7 +88,7 @@ public class TrailersFragment extends Fragment implements TrailersAdapter.ItemCl
                         trailers = TrailersMapper.ResponseToDominio(response.body().getResults());
                         listTrailerAdapter.setTrailers(trailers);
                         tv_not_show_items.setVisibility(View.GONE);
-                    }else {
+                    } else {
                         tv_not_show_items.setVisibility(View.VISIBLE);
                     }
                 } else {

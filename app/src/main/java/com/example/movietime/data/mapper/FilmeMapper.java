@@ -8,7 +8,6 @@ import java.util.List;
 
 public class FilmeMapper {
 
-    //Obtém lista de filmes response ( List<FilmesResponse>  ), e converte para uma lista de filmes ( List<Filme> filmelist ).
     public static List<Filme> ResponseToDominio(List<FilmeResponse> listaFilmeResponse) {
 
         List<Filme> filmeList = new ArrayList<>();

@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.movietime.BottomNavigationBehavior;
 import com.example.movietime.R;
+import com.example.movietime.SingletonUser;
 import com.example.movietime.adapters.FilmesAdapter;
 import com.example.movietime.autentication.EditProfile;
 import com.example.movietime.autentication.LoginActivity;
@@ -59,16 +60,9 @@ public class MainActivity extends AppCompatActivity implements FilmesAdapter.Ite
             logout();
         }
 
-        SharedPreferences prefs = MainActivity.this.getSharedPreferences("User", Context.MODE_PRIVATE);
-        String nomeArmazenado = prefs.getString("Username", null);
-        String EmailArmazenado = prefs.getString("Email", null);
-        String PasswordArmazenado = prefs.getString("Password", null);
-
-        if ((nomeArmazenado != null) && (EmailArmazenado != null) && (PasswordArmazenado != null)) {
-            user = prefs.getString("Username", "");
-            email = prefs.getString("Email", "");
-            password = prefs.getString("Password", "");
-        }
+        user = (SingletonUser.singleton().fetchValueString("Username"));
+        email = (SingletonUser.singleton().fetchValueString("Email"));
+        password = (SingletonUser.singleton().fetchValueString("Password"));
 
         bottomNavigationView = findViewById(R.id.btn_nav);
 
@@ -110,9 +104,6 @@ public class MainActivity extends AppCompatActivity implements FilmesAdapter.Ite
                     break;
 
             }
-//            getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment)
-//                    .addToBackStack(fragment.getClass().getName())
-//                    .commit();
             getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
             return true;
         }
@@ -129,12 +120,7 @@ public class MainActivity extends AppCompatActivity implements FilmesAdapter.Ite
             @Override
             public boolean onQueryTextSubmit(String query) {
                 Fragment fragment = new SearchFragment(query);
-//                getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment)
-//                        .addToBackStack(fragment.getClass().getName())
-//                        .commit();
                 getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
-                //searchView.setQuery("",false);
-                //searchView.onActionViewCollapsed();
                 return true;
             }
 
@@ -148,7 +134,6 @@ public class MainActivity extends AppCompatActivity implements FilmesAdapter.Ite
             @Override
             public void onClick(View v) {
                 searchView.setQuery("", false);
-                //searchView.onActionViewCollapsed();
                 if (flag == 0)
                     getSupportFragmentManager().beginTransaction().replace(R.id.container, new PopularMoviesFragment()).commit();
                 if (flag == 1)
@@ -157,7 +142,6 @@ public class MainActivity extends AppCompatActivity implements FilmesAdapter.Ite
                     getSupportFragmentManager().beginTransaction().replace(R.id.container, new UpComingMoviesFragment()).commit();
                 if (flag == 3)
                     getSupportFragmentManager().beginTransaction().replace(R.id.container, new FavoriteMovieFragment()).commit();
-                //getSupportFragmentManager().popBackStack();
             }
         });
         return true;
@@ -178,9 +162,6 @@ public class MainActivity extends AppCompatActivity implements FilmesAdapter.Ite
             case R.id.update_profile:
                 startActivity(new Intent(MainActivity.this, EditProfile.class));
                 break;
-//            case android.R.id.home:
-//                getSupportFragmentManager().popBackStack();
-//                break;
         }
         return super.onOptionsItemSelected(item);
     }

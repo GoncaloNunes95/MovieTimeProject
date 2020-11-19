@@ -1,10 +1,8 @@
 package com.example.movietime.autentication;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
@@ -15,8 +13,9 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.movietime.database.DBHelper;
 import com.example.movietime.R;
+import com.example.movietime.SingletonUser;
+import com.example.movietime.database.DBHelper;
 import com.example.movietime.main.activity.MainActivity;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
@@ -39,6 +38,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         db = new DBHelper(this);
 
         session = new Session(this);
+
+        SingletonUser.singleton(this.getApplicationContext());
 
         Username = (EditText) findViewById(R.id.etUsername);
         Password = (EditText) findViewById(R.id.etPassword);
@@ -78,19 +79,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                         Toast.makeText(LoginActivity.this, "Bem Vindo/a " + username, Toast.LENGTH_LONG).show();
 
-                        SharedPreferences sharedPreferences = LoginActivity.this.getSharedPreferences("User", Context.MODE_PRIVATE);
-                        SharedPreferences.Editor editor = sharedPreferences.edit();
-                        editor.putString("Username", username);
-                        editor.putString("Email", c.getString(1));
-                        editor.putString("Password", password);
-                        editor.commit();
+                        SingletonUser.singleton().storeValueString("Username", username);
+                        SingletonUser.singleton().storeValueString("Email", c.getString(1));
+                        SingletonUser.singleton().storeValueString("Password", password);
 
                         startActivity(new Intent(LoginActivity.this, MainActivity.class));
                     } else {
                         Toast.makeText(this, R.string.error_login, Toast.LENGTH_LONG).show();
                     }
                 }
-
                 break;
 
             case R.id.tvRegister:

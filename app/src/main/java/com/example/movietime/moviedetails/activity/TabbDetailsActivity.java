@@ -5,22 +5,20 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
-import com.example.movietime.database.DBHelper;
-import com.example.movietime.R;
-import com.example.movietime.autentication.Session;
-import com.example.movietime.autentication.LoginActivity;
-import com.example.movietime.data.Filme;
-import com.google.android.material.tabs.TabLayout;
-
-import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager.widget.ViewPager;
 
+import com.example.movietime.R;
+import com.example.movietime.autentication.LoginActivity;
+import com.example.movietime.autentication.Session;
+import com.example.movietime.data.Filme;
+import com.example.movietime.database.DBHelper;
 import com.example.movietime.ui.activity.SectionsPagerAdapter;
+import com.google.android.material.tabs.TabLayout;
 
 public class TabbDetailsActivity extends AppCompatActivity {
 
     private Filme filme;
-    private String email, password, user;
     private DBHelper db;
     private Session session;
 

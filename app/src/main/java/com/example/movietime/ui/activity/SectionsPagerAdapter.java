@@ -8,8 +8,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
-import com.example.movietime.moviedetails.fragments.MovieFragment;
 import com.example.movietime.R;
+import com.example.movietime.moviedetails.fragments.MovieFragment;
 import com.example.movietime.moviedetails.fragments.ReviewsFragment;
 import com.example.movietime.moviedetails.fragments.TrailersFragment;
 
@@ -29,7 +29,7 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
         Fragment fragment = null;
 
-        switch (position){
+        switch (position) {
             case 0:
                 fragment = new MovieFragment();
                 break;

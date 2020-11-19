@@ -1,8 +1,6 @@
 package com.example.movietime.main.fragments;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,22 +11,18 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.movietime.database.DBHelper;
-import com.example.movietime.adapters.FilmesAdapter;
 import com.example.movietime.R;
-import com.example.movietime.moviedetails.activity.TabbDetailsActivity;
+import com.example.movietime.SingletonUser;
+import com.example.movietime.adapters.FilmesAdapter;
 import com.example.movietime.data.Filme;
+import com.example.movietime.database.DBHelper;
+import com.example.movietime.moviedetails.activity.TabbDetailsActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class FavoriteMovieFragment extends Fragment implements FilmesAdapter.ItemMovieClickListener {
 
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    private String mParam1;
-    private String mParam2;
     private RecyclerView listdados;
     View v;
     private DBHelper db;
@@ -39,15 +33,6 @@ public class FavoriteMovieFragment extends Fragment implements FilmesAdapter.Ite
     public FavoriteMovieFragment() {
     }
 
-    public static FavoriteMovieFragment newInstance(String param1, String param2) {
-        FavoriteMovieFragment fragment = new FavoriteMovieFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.fragment_favorite_movie, container, false);
@@ -55,16 +40,9 @@ public class FavoriteMovieFragment extends Fragment implements FilmesAdapter.Ite
 
         db = new DBHelper(getContext());
 
-        SharedPreferences prefs = this.getActivity().getSharedPreferences("User", Context.MODE_PRIVATE);
-        String nomeArmazenado = prefs.getString("Username", null);
-        String EmailArmazenado = prefs.getString("Email", null);
-        String PasswordArmazenado = prefs.getString("Password", null);
-
-        if ((nomeArmazenado != null) && (EmailArmazenado != null) && (PasswordArmazenado != null)) {
-            user = prefs.getString("Username", "");
-            email = prefs.getString("Email", "");
-            password = prefs.getString("Password", "");
-        }
+        user = (SingletonUser.singleton().fetchValueString("Username"));
+        email = (SingletonUser.singleton().fetchValueString("Email"));
+        password = (SingletonUser.singleton().fetchValueString("Password"));
 
         String result = db.SelectFavoritosUser(user);
 
@@ -96,7 +74,7 @@ public class FavoriteMovieFragment extends Fragment implements FilmesAdapter.Ite
 
         List<Filme> filmes = new ArrayList<>();
 
-        do{
+        do {
             Filme filme = new Filme(c.getInt(1),
                     c.getString(3),
                     c.getString(2),
@@ -105,7 +83,7 @@ public class FavoriteMovieFragment extends Fragment implements FilmesAdapter.Ite
                     c.getString(6));
 
             filmes.add(filme);
-        }while (c.moveToNext());
+        } while (c.moveToNext());
         return filmes;
     }
 
@@ -129,8 +107,7 @@ public class FavoriteMovieFragment extends Fragment implements FilmesAdapter.Ite
             if (resultado.equals("1")) {
                 Cursor c = configuracaoAdapter();
                 listaFilmesAdapter.setFilmes(lista_de_filmes(c));
-            }
-            else {
+            } else {
                 listaFilmesAdapter.setFilmes(new ArrayList<>());
             }
         }
