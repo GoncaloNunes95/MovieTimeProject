@@ -12,6 +12,7 @@ import com.example.movietime.autentication.LoginActivity;
 import com.example.movietime.autentication.Session;
 import com.example.movietime.data.Filme;
 import com.example.movietime.database.DBHelper;
+import com.example.movietime.moviedetails.fragments.MovieFragment;
 import com.example.movietime.ui.activity.SectionsPagerAdapter;
 import com.google.android.material.tabs.TabLayout;
 
@@ -42,5 +43,16 @@ public class TabbDetailsActivity extends AppCompatActivity {
         }
 
         filme = (Filme) getIntent().getSerializableExtra("MOVIE_DETAILS");
+    }
+
+    public Bundle getData(){
+        Bundle bundle = new Bundle();
+        bundle.putInt("id", filme.getId());
+        bundle.putString("title", filme.getOriginal_title());
+        bundle.putString("poster", filme.getPoster_path());
+        bundle.putString("date", filme.getRelease_date());
+        bundle.putFloat("average", filme.getVote_average());
+        bundle.putString("sinopse", filme.getSinopse());
+        return bundle;
     }
 }

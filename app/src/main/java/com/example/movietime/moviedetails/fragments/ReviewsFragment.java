@@ -19,6 +19,7 @@ import com.example.movietime.autentication.Session;
 import com.example.movietime.data.Filme;
 import com.example.movietime.data.mapper.ReviewsMapper;
 import com.example.movietime.database.DBHelper;
+import com.example.movietime.moviedetails.activity.TabbDetailsActivity;
 import com.example.movietime.network.ApiService;
 import com.example.movietime.network.response.ReviewsResult;
 
@@ -35,6 +36,7 @@ public class ReviewsFragment extends Fragment {
     private RecyclerView listreviews;
     private TextView tv_not_show_items;
     private Filme filme;
+    int id;
 
     public ReviewsFragment() {
     }
@@ -49,7 +51,11 @@ public class ReviewsFragment extends Fragment {
         email = (SingletonUser.singleton().fetchValueString("Email"));
         password = (SingletonUser.singleton().fetchValueString("Password"));
 
-        filme = (Filme) getActivity().getIntent().getSerializableExtra("MOVIE_DETAILS");
+        //filme = (Filme) getActivity().getIntent().getSerializableExtra("MOVIE_DETAILS");
+
+        TabbDetailsActivity activity = (TabbDetailsActivity)getActivity();
+        Bundle results = activity.getData();
+        id = results.getInt("id");
 
         tv_not_show_items = (TextView) view.findViewById(R.id.not_show_items);
 
@@ -75,7 +81,7 @@ public class ReviewsFragment extends Fragment {
     private void lista_de_reviews() {
 
         String chaveAPI = BuildConfig.chaveAPI;
-        ApiService.getInstance().Reviews(String.valueOf(filme.getId()), chaveAPI).enqueue(new Callback<ReviewsResult>() {
+        ApiService.getInstance().Reviews(String.valueOf(id), chaveAPI).enqueue(new Callback<ReviewsResult>() {
             @Override
             public void onResponse(Call<ReviewsResult> call, Response<ReviewsResult> response) {
 

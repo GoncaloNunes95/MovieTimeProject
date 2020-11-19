@@ -22,6 +22,7 @@ import com.example.movietime.data.Filme;
 import com.example.movietime.data.Trailers;
 import com.example.movietime.data.mapper.TrailersMapper;
 import com.example.movietime.database.DBHelper;
+import com.example.movietime.moviedetails.activity.TabbDetailsActivity;
 import com.example.movietime.network.ApiService;
 import com.example.movietime.network.response.TrailersResult;
 
@@ -41,6 +42,7 @@ public class TrailersFragment extends Fragment implements TrailersAdapter.ItemCl
     private Filme filme;
     public List<Trailers> trailers;
     private TextView tv_not_show_items;
+    int id;
 
     public TrailersFragment() {
     }
@@ -54,7 +56,11 @@ public class TrailersFragment extends Fragment implements TrailersAdapter.ItemCl
         email = (SingletonUser.singleton().fetchValueString("Email"));
         password = (SingletonUser.singleton().fetchValueString("Password"));
 
-        filme = (Filme) getActivity().getIntent().getSerializableExtra("MOVIE_DETAILS");
+        //filme = (Filme) getActivity().getIntent().getSerializableExtra("MOVIE_DETAILS");
+
+        TabbDetailsActivity activity = (TabbDetailsActivity)getActivity();
+        Bundle results = activity.getData();
+        id = results.getInt("id");
 
         tv_not_show_items = (TextView) view.findViewById(R.id.not_show_items);
 
@@ -79,7 +85,7 @@ public class TrailersFragment extends Fragment implements TrailersAdapter.ItemCl
     private void loadTrailer() {
 
         String chaveAPI = BuildConfig.chaveAPI;
-        ApiService.getInstance().Trailers(String.valueOf(filme.getId()), chaveAPI).enqueue(new Callback<TrailersResult>() {
+        ApiService.getInstance().Trailers(String.valueOf(id), chaveAPI).enqueue(new Callback<TrailersResult>() {
             @Override
             public void onResponse(Call<TrailersResult> call, Response<TrailersResult> response) {
 
