@@ -47,4 +47,5 @@
     <string name="search_btn">Search</string>
     <string name="there_are_no_reviews">There are no reviews</string>
     <string name="there_are_no_trailers">There are no trailers</string>
+    <string name="error_add_favorite">Ops! Something went wrong</string>
 </resources>

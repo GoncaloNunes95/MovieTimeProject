@@ -67,12 +67,18 @@ public class MovieFragment extends Fragment {
                     Toast.makeText(getContext(), R.string.removed_favorites, Toast.LENGTH_LONG).show();
                     favorite.setBackgroundResource(R.drawable.favorite_not_check);
                 } else {
-                    long res = db.CriarFavorito(user, filme.getId(), filme.getOriginal_title(), filme.getPoster_path(), filme.getRelease_date(), String.valueOf(filme.getVote_average()), filme.getSinopse());
-                    if (res > 0) {
-                        Toast.makeText(getContext(), R.string.add_favorites, Toast.LENGTH_LONG).show();
-                        favorite.setBackgroundResource(R.drawable.favorite_check);
-                    } else {
-                        Toast.makeText(getContext(), R.string.error_add_favorites, Toast.LENGTH_LONG).show();
+                    try {
+                        long res = db.CriarFavorito(user, filme.getId(), filme.getOriginal_title(), filme.getPoster_path(), filme.getRelease_date(), String.valueOf(filme.getVote_average()), filme.getSinopse());
+                        if (res > 0) {
+                            Toast.makeText(getContext(), R.string.add_favorites, Toast.LENGTH_LONG).show();
+                            favorite.setBackgroundResource(R.drawable.favorite_check);
+                        } else {
+                            Toast.makeText(getContext(), R.string.error_add_favorites, Toast.LENGTH_LONG).show();
+                        }
+                    }
+                    catch (Exception e){
+                        e.printStackTrace();
+                        Toast.makeText(getContext(), R.string.error_add_favorite, Toast.LENGTH_LONG).show();
                     }
                 }
             }
