@@ -14,7 +14,7 @@
         android:id="@+id/search_btn"
         android:icon="@android:drawable/ic_menu_search"
         android:orderInCategory="500"
-        android:title="Search"
+        android:title="@string/search_btn"
         app:showAsAction="collapseActionView|ifRoom"
         app:actionViewClass="android.widget.SearchView"/>
 

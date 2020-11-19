@@ -1,7 +1,9 @@
 package com.example.movietime.main.activity;
 
+import android.app.AlertDialog;
 import android.app.FragmentTransaction;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.nfc.Tag;
@@ -11,6 +13,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.SearchView;
 import android.widget.Toast;
 
@@ -18,7 +21,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.core.view.MenuItemCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -54,6 +59,7 @@ public class MainActivity extends AppCompatActivity implements FilmesAdapter.Ite
     private Session session;
     private RecyclerView listdados;
     private FilmesAdapter listaFilmesAdapter;
+    private int flag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +67,6 @@ public class MainActivity extends AppCompatActivity implements FilmesAdapter.Ite
         setContentView(R.layout.activity_main);
 
         getSupportActionBar().setSubtitle("Movies");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setIcon(R.mipmap.logotipo);
 
@@ -105,23 +110,28 @@ public class MainActivity extends AppCompatActivity implements FilmesAdapter.Ite
 
                 case R.id.populares:
                     fragment = new PopularMoviesFragment();
+                    flag = 0;
                     break;
 
                 case R.id.best_classificados:
                     fragment = new TopRatedMoviesFragment();
+                    flag = 1;
                     break;
 
                 case R.id.upcoming:
                     fragment = new UpComingMoviesFragment();
+                    flag = 2;
                     break;
                 case R.id.favorites:
                     fragment = new FavoriteMovieFragment();
+                    flag = 3;
                     break;
 
             }
-            getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment)
-                    .addToBackStack(fragment.getClass().getName())
-                    .commit();
+//            getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment)
+//                    .addToBackStack(fragment.getClass().getName())
+//                    .commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
             return true;
         }
     };
@@ -132,14 +142,17 @@ public class MainActivity extends AppCompatActivity implements FilmesAdapter.Ite
 
         MenuItem menuItem = menu.findItem(R.id.search_btn);
         SearchView searchView = (SearchView) menuItem.getActionView();
+        searchView.setQueryHint("Search");
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 Fragment fragment = new SearchFragment(query);
-                getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment)
-                        .addToBackStack(fragment.getClass().getName())
-                        .commit();
-                //Log.d("Aquiiiiiiiiiiii", fragment.getClass().getName());
+//                getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment)
+//                        .addToBackStack(fragment.getClass().getName())
+//                        .commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
+                //searchView.setQuery("",false);
+                //searchView.onActionViewCollapsed();
                 return true;
             }
 
@@ -148,22 +161,23 @@ public class MainActivity extends AppCompatActivity implements FilmesAdapter.Ite
                 return false;
             }
         });
-        int searchCloseButtonId = searchView.getContext().getResources()
-                .getIdentifier("android:id/search_close_btn", null, null);
+        int searchCloseButtonId = searchView.getContext().getResources().getIdentifier("android:id/search_close_btn", null, null);
         searchView.findViewById(searchCloseButtonId).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getSupportFragmentManager().popBackStack();
+                searchView.setQuery("",false);
+                //searchView.onActionViewCollapsed();
+                if (flag == 0)
+                    getSupportFragmentManager().beginTransaction().replace(R.id.container, new PopularMoviesFragment()).commit();
+                if (flag == 1)
+                    getSupportFragmentManager().beginTransaction().replace(R.id.container, new TopRatedMoviesFragment()).commit();
+                if (flag == 2)
+                    getSupportFragmentManager().beginTransaction().replace(R.id.container, new UpComingMoviesFragment()).commit();
+                if (flag == 3)
+                    getSupportFragmentManager().beginTransaction().replace(R.id.container, new FavoriteMovieFragment()).commit();
+                //getSupportFragmentManager().popBackStack();
             }
         });
-
-        /*searchView.setOnCloseListener(new SearchView.OnCloseListener() {
-            @Override
-            public boolean onClose() {
-                getSupportFragmentManager().popBackStack();
-                return false;
-            }
-        });*/
         return true;
     }
 
@@ -209,5 +223,4 @@ public class MainActivity extends AppCompatActivity implements FilmesAdapter.Ite
         startActivity(new Intent(MainActivity.this, LoginActivity.class));
 
     }
-
 }
