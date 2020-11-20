@@ -1,12 +1,7 @@
 package com.example.movietime;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
-
-import com.example.movietime.autentication.LoginActivity;
-import com.example.movietime.autentication.Session;
-import com.example.movietime.main.activity.MainActivity;
 
 public class SingletonUser {
 
@@ -15,7 +10,7 @@ public class SingletonUser {
     Context context;
     SharedPreferences prefs;
     SharedPreferences.Editor sharedPrefsEditor;
-    String username, email, password;
+    String username;
 
     public static SingletonUser singleton(Context context) {
         if (singleton_instance == null) {
@@ -55,23 +50,7 @@ public class SingletonUser {
         return username;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
     public void setUsername(String username) {
         this.username = username;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 }
