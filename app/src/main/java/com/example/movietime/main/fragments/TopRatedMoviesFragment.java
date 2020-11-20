@@ -1,6 +1,7 @@
 package com.example.movietime.main.fragments;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -51,7 +52,16 @@ public class TopRatedMoviesFragment extends Fragment implements FilmesAdapter.It
 
         listaFilmesAdapter = new FilmesAdapter(this);
 
-        RecyclerView.LayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
+        RecyclerView.LayoutManager gridLayoutManager;
+        int orientaion = getResources().getConfiguration().orientation;
+
+        if (orientaion == Configuration.ORIENTATION_LANDSCAPE){
+            gridLayoutManager = new GridLayoutManager(getContext(), 4);
+        }
+        else {
+            gridLayoutManager = new GridLayoutManager(getContext(), 2);
+        }
+
         listdados.setLayoutManager(gridLayoutManager);
         listdados.setAdapter(listaFilmesAdapter);
     }
