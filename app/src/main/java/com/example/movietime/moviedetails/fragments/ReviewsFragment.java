@@ -13,13 +13,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.movietime.BuildConfig;
 import com.example.movietime.R;
-import com.example.movietime.SingletonUser;
 import com.example.movietime.adapters.ReviewsAdapter;
-import com.example.movietime.autentication.Session;
 import com.example.movietime.data.Filme;
 import com.example.movietime.data.mapper.ReviewsMapper;
 import com.example.movietime.database.DBHelper;
-import com.example.movietime.moviedetails.activity.TabbDetailsActivity;
 import com.example.movietime.network.ApiService;
 import com.example.movietime.network.response.ReviewsResult;
 
@@ -30,15 +27,20 @@ import retrofit2.Response;
 public class ReviewsFragment extends Fragment {
 
     private DBHelper db;
-    private Session session;
-    private String email, password, user;
     private ReviewsAdapter listReviewsAdapter;
     private RecyclerView listreviews;
     private TextView tv_not_show_items;
     private Filme filme;
-    int id;
 
-    public ReviewsFragment() {
+    private static final String KEY_FILME = "MOVIE_DETAILS";
+
+    public static ReviewsFragment newInstance(Filme filme) {
+
+        Bundle args = new Bundle();
+        args.putSerializable(KEY_FILME, filme);
+        ReviewsFragment fragment = new ReviewsFragment();
+        fragment.setArguments(args);
+        return fragment;
     }
 
     @Override
@@ -47,11 +49,8 @@ public class ReviewsFragment extends Fragment {
 
         db = new DBHelper(getContext());
 
-        //filme = (Filme) getActivity().getIntent().getSerializableExtra("MOVIE_DETAILS");
-
-        TabbDetailsActivity activity = (TabbDetailsActivity)getActivity();
-        Bundle results = activity.getData();
-        id = results.getInt("id");
+        Bundle bundle = getArguments();
+        filme = (Filme) bundle.getSerializable(KEY_FILME);
 
         tv_not_show_items = (TextView) view.findViewById(R.id.not_show_items);
 
@@ -77,7 +76,7 @@ public class ReviewsFragment extends Fragment {
     private void lista_de_reviews() {
 
         String chaveAPI = BuildConfig.chaveAPI;
-        ApiService.getInstance().Reviews(String.valueOf(id), chaveAPI).enqueue(new Callback<ReviewsResult>() {
+        ApiService.getInstance().Reviews(String.valueOf(filme.getId()), chaveAPI).enqueue(new Callback<ReviewsResult>() {
             @Override
             public void onResponse(Call<ReviewsResult> call, Response<ReviewsResult> response) {
 

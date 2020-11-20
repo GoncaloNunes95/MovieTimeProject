@@ -32,9 +32,6 @@ public class PopularMoviesFragment extends Fragment implements FilmesAdapter.Ite
     View v;
     int i = 1;
 
-    public PopularMoviesFragment() {
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.fragment_popular_movies, container, false);

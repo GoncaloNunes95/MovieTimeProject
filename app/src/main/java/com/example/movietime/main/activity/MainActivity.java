@@ -1,8 +1,6 @@
 package com.example.movietime.main.activity;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
@@ -38,10 +36,7 @@ public class MainActivity extends AppCompatActivity implements FilmesAdapter.Ite
 
     private BottomNavigationView bottomNavigationView;
     private DBHelper db;
-    private String username, email, password, user;
     private Session session;
-    private RecyclerView listdados;
-    private FilmesAdapter listaFilmesAdapter;
     private int flag;
 
     @Override
@@ -62,10 +57,6 @@ public class MainActivity extends AppCompatActivity implements FilmesAdapter.Ite
             finish();
             startActivity(new Intent(MainActivity.this, LoginActivity.class));
         }
-
-//        user = (SingletonUser.singleton().fetchValueString("Username"));
-//        email = (SingletonUser.singleton().fetchValueString("Email"));
-//        password = (SingletonUser.singleton().fetchValueString("Password"));
 
         bottomNavigationView = findViewById(R.id.btn_nav);
 

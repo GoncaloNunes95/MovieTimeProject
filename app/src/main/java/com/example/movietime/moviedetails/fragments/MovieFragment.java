@@ -13,10 +13,8 @@ import androidx.fragment.app.Fragment;
 
 import com.example.movietime.R;
 import com.example.movietime.SingletonUser;
-import com.example.movietime.autentication.Session;
 import com.example.movietime.data.Filme;
 import com.example.movietime.database.DBHelper;
-import com.example.movietime.moviedetails.activity.TabbDetailsActivity;
 import com.squareup.picasso.Picasso;
 
 public class MovieFragment extends Fragment {
@@ -25,12 +23,15 @@ public class MovieFragment extends Fragment {
     private ImageButton favorite;
     private DBHelper db;
     private String user;
-    int id;
-    Float average;
-    String title, poster, date, overview;
+    private static final String KEY_FILME = "MOVIE_DETAILS";
 
+    public static MovieFragment newInstance(Filme filme) {
 
-    public MovieFragment() {
+        Bundle args = new Bundle();
+        args.putSerializable(KEY_FILME, filme);
+        MovieFragment fragment = new MovieFragment();
+        fragment.setArguments(args);
+        return fragment;
     }
 
     @Override
@@ -40,16 +41,8 @@ public class MovieFragment extends Fragment {
 
         user = (SingletonUser.singleton().fetchValueString("Username"));
 
-        //filme = (Filme) getActivity().getIntent().getSerializableExtra("MOVIE_DETAILS");
-
-        TabbDetailsActivity activity = (TabbDetailsActivity)getActivity();
-        Bundle results = activity.getData();
-        id = results.getInt("id");
-        title = results.getString("title");
-        poster = results.getString("poster");
-        date = results.getString("date");
-        average = results.getFloat("average");
-        overview = results.getString("sinopse");
+        Bundle bundle = getArguments();
+        filme = (Filme) bundle.getSerializable(KEY_FILME);
 
         favorite = (ImageButton) view.findViewById(R.id.favorite_btn);
         TextView movie_title = (TextView) view.findViewById(R.id.title_movie);
@@ -58,17 +51,11 @@ public class MovieFragment extends Fragment {
         TextView vote_average = (TextView) view.findViewById(R.id.vote_average);
         TextView sinopse = (TextView) view.findViewById(R.id.sinopse);
 
-//        movie_title.setText(filme.getOriginal_title());
-//        release_date_movie.setText(filme.getRelease_date());
-//        vote_average.setText(Float.toString(filme.getVote_average()));
-//        sinopse.setText(filme.getSinopse());
-//        Picasso.get().load("https://image.tmdb.org/t/p/w185/" + filme.getPoster_path()).into(movie_poster);
-
-        movie_title.setText(title);
-        release_date_movie.setText(date);
-        vote_average.setText(Float.toString(average));
-        sinopse.setText(overview);
-        Picasso.get().load("https://image.tmdb.org/t/p/w185/" + poster).into(movie_poster);
+        movie_title.setText(filme.getOriginal_title());
+        release_date_movie.setText(filme.getRelease_date());
+        vote_average.setText(Float.toString(filme.getVote_average()));
+        sinopse.setText(filme.getSinopse());
+        Picasso.get().load("https://image.tmdb.org/t/p/w185/" + filme.getPoster_path()).into(movie_poster);
 
         StatusFavorite();
 
@@ -76,23 +63,22 @@ public class MovieFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                String result = db.ValidarExistenciaFavorito(user, id);
+                String result = db.ValidarExistenciaFavorito(user, filme.getId());
 
                 if (result.equals("1")) {
-                    db.RemoveFavorito(user, id);
+                    db.RemoveFavorito(user, filme.getId());
                     Toast.makeText(getContext(), R.string.removed_favorites, Toast.LENGTH_LONG).show();
                     favorite.setBackgroundResource(R.drawable.favorite_not_check);
                 } else {
                     try {
-                        long res = db.CriarFavorito(user, id, title, poster, date, String.valueOf(average), overview);
+                        long res = db.CriarFavorito(user, filme.getId(), filme.getOriginal_title(), filme.getPoster_path(), filme.getRelease_date(), String.valueOf(filme.getVote_average()), filme.getSinopse());
                         if (res > 0) {
                             Toast.makeText(getContext(), R.string.add_favorites, Toast.LENGTH_LONG).show();
                             favorite.setBackgroundResource(R.drawable.favorite_check);
                         } else {
                             Toast.makeText(getContext(), R.string.error_add_favorites, Toast.LENGTH_LONG).show();
                         }
-                    }
-                    catch (Exception e){
+                    } catch (Exception e) {
                         e.printStackTrace();
                         Toast.makeText(getContext(), R.string.error_add_favorite, Toast.LENGTH_LONG).show();
                     }
@@ -104,7 +90,7 @@ public class MovieFragment extends Fragment {
 
     private void StatusFavorite() {
 
-        String result = db.ValidarExistenciaFavorito(user, id);
+        String result = db.ValidarExistenciaFavorito(user, filme.getId());
 
         if (result.equals("1"))
             favorite.setBackgroundResource(R.drawable.favorite_check);

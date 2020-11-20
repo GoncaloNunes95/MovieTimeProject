@@ -27,7 +27,6 @@ public class FavoriteMovieFragment extends Fragment implements FilmesAdapter.Ite
     View v;
     private DBHelper db;
     private String user;
-    private List<Filme> filmes;
     private FilmesAdapter listaFilmesAdapter;
 
     public FavoriteMovieFragment() {

@@ -1,8 +1,6 @@
 package com.example.movietime.autentication;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -101,7 +99,7 @@ public class EditProfile extends AppCompatActivity {
                             SingletonUser.singleton().storeValueString("Email", email);
                             SingletonUser.singleton().storeValueString("Password", senha1);
 
-                            Toast.makeText(this, getString(R.string.update_data_saved) + username + "!", Toast.LENGTH_LONG).show();
+                            Toast.makeText(this, getString(R.string.update_data_saved) + " " + username + "!", Toast.LENGTH_LONG).show();
 
                             startActivity(new Intent(EditProfile.this, MainActivity.class));
 

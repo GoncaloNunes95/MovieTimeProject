@@ -15,14 +15,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.movietime.BuildConfig;
 import com.example.movietime.R;
-import com.example.movietime.SingletonUser;
 import com.example.movietime.adapters.TrailersAdapter;
-import com.example.movietime.autentication.Session;
 import com.example.movietime.data.Filme;
 import com.example.movietime.data.Trailers;
 import com.example.movietime.data.mapper.TrailersMapper;
 import com.example.movietime.database.DBHelper;
-import com.example.movietime.moviedetails.activity.TabbDetailsActivity;
 import com.example.movietime.network.ApiService;
 import com.example.movietime.network.response.TrailersResult;
 
@@ -34,15 +31,21 @@ import retrofit2.Response;
 
 public class TrailersFragment extends Fragment implements TrailersAdapter.ItemClickListener {
 
+    private Filme filme;
     private DBHelper db;
     private RecyclerView listtrailers;
     private TrailersAdapter listTrailerAdapter;
-    private Filme filme;
     public List<Trailers> trailers;
     private TextView tv_not_show_items;
-    int id;
+    private static final String KEY_FILME = "MOVIE_DETAILS";
 
-    public TrailersFragment() {
+    public static TrailersFragment newInstance(Filme filme) {
+
+        Bundle args = new Bundle();
+        args.putSerializable(KEY_FILME, filme);
+        TrailersFragment fragment = new TrailersFragment();
+        fragment.setArguments(args);
+        return fragment;
     }
 
     @Override
@@ -50,11 +53,8 @@ public class TrailersFragment extends Fragment implements TrailersAdapter.ItemCl
         View view = inflater.inflate(R.layout.fragment_trailers, container, false);
         db = new DBHelper(getContext());
 
-        //filme = (Filme) getActivity().getIntent().getSerializableExtra("MOVIE_DETAILS");
-
-        TabbDetailsActivity activity = (TabbDetailsActivity)getActivity();
-        Bundle results = activity.getData();
-        id = results.getInt("id");
+        Bundle bundle = getArguments();
+        filme = (Filme) bundle.getSerializable(KEY_FILME);
 
         tv_not_show_items = (TextView) view.findViewById(R.id.not_show_items);
 
@@ -79,7 +79,7 @@ public class TrailersFragment extends Fragment implements TrailersAdapter.ItemCl
     private void loadTrailer() {
 
         String chaveAPI = BuildConfig.chaveAPI;
-        ApiService.getInstance().Trailers(String.valueOf(id), chaveAPI).enqueue(new Callback<TrailersResult>() {
+        ApiService.getInstance().Trailers(String.valueOf(filme.getId()), chaveAPI).enqueue(new Callback<TrailersResult>() {
             @Override
             public void onResponse(Call<TrailersResult> call, Response<TrailersResult> response) {
 
