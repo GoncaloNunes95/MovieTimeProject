@@ -35,8 +35,6 @@ import retrofit2.Response;
 public class TrailersFragment extends Fragment implements TrailersAdapter.ItemClickListener {
 
     private DBHelper db;
-    private Session session;
-    private String email, password, user;
     private RecyclerView listtrailers;
     private TrailersAdapter listTrailerAdapter;
     private Filme filme;
@@ -51,10 +49,6 @@ public class TrailersFragment extends Fragment implements TrailersAdapter.ItemCl
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_trailers, container, false);
         db = new DBHelper(getContext());
-
-        user = (SingletonUser.singleton().fetchValueString("Username"));
-        email = (SingletonUser.singleton().fetchValueString("Email"));
-        password = (SingletonUser.singleton().fetchValueString("Password"));
 
         //filme = (Filme) getActivity().getIntent().getSerializableExtra("MOVIE_DETAILS");
 

@@ -26,7 +26,7 @@ public class FavoriteMovieFragment extends Fragment implements FilmesAdapter.Ite
     private RecyclerView listdados;
     View v;
     private DBHelper db;
-    private String email, password, user;
+    private String user;
     private List<Filme> filmes;
     private FilmesAdapter listaFilmesAdapter;
 
@@ -41,8 +41,6 @@ public class FavoriteMovieFragment extends Fragment implements FilmesAdapter.Ite
         db = new DBHelper(getContext());
 
         user = (SingletonUser.singleton().fetchValueString("Username"));
-        email = (SingletonUser.singleton().fetchValueString("Email"));
-        password = (SingletonUser.singleton().fetchValueString("Password"));
 
         String result = db.SelectFavoritosUser(user);
 

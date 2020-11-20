@@ -24,7 +24,7 @@ public class MovieFragment extends Fragment {
     private Filme filme;
     private ImageButton favorite;
     private DBHelper db;
-    private String user, email, password;
+    private String user;
     int id;
     Float average;
     String title, poster, date, overview;
@@ -39,8 +39,6 @@ public class MovieFragment extends Fragment {
         db = new DBHelper(getContext());
 
         user = (SingletonUser.singleton().fetchValueString("Username"));
-        email = (SingletonUser.singleton().fetchValueString("Email"));
-        password = (SingletonUser.singleton().fetchValueString("Password"));
 
         //filme = (Filme) getActivity().getIntent().getSerializableExtra("MOVIE_DETAILS");
 

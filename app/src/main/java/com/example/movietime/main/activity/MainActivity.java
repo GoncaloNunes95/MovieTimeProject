@@ -63,9 +63,9 @@ public class MainActivity extends AppCompatActivity implements FilmesAdapter.Ite
             startActivity(new Intent(MainActivity.this, LoginActivity.class));
         }
 
-        user = (SingletonUser.singleton().fetchValueString("Username"));
-        email = (SingletonUser.singleton().fetchValueString("Email"));
-        password = (SingletonUser.singleton().fetchValueString("Password"));
+//        user = (SingletonUser.singleton().fetchValueString("Username"));
+//        email = (SingletonUser.singleton().fetchValueString("Email"));
+//        password = (SingletonUser.singleton().fetchValueString("Password"));
 
         bottomNavigationView = findViewById(R.id.btn_nav);
 

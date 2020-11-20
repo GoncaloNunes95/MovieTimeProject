@@ -47,10 +47,6 @@ public class ReviewsFragment extends Fragment {
 
         db = new DBHelper(getContext());
 
-        user = (SingletonUser.singleton().fetchValueString("Username"));
-        email = (SingletonUser.singleton().fetchValueString("Email"));
-        password = (SingletonUser.singleton().fetchValueString("Password"));
-
         //filme = (Filme) getActivity().getIntent().getSerializableExtra("MOVIE_DETAILS");
 
         TabbDetailsActivity activity = (TabbDetailsActivity)getActivity();
